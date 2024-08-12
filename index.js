@@ -27,6 +27,21 @@ const updateDisplay = () => {
   display.textContent = displayValue;
 };
 
+const operate = function (firstNumber, operator, secondNumber) {
+  switch (operator) {
+    case "+":
+      return add([firstNumber, secondNumber]);
+    case "-":
+      return subtract([firstNumber, secondNumber]);
+    case "*":
+      return multiply([firstNumber, secondNumber]);
+    case "/":
+      return divide([firstNumber, secondNumber]);
+    default:
+      return "Invalid operator";
+  }
+};
+
 const handleNumberClick = (event) => {
   const buttonValue = event.target.dataset.value;
   displayValue += buttonValue;
@@ -39,7 +54,7 @@ const handleOperatorClick = (event) => {
     operator = event.target.dataset.value;
     displayValue = "";
   } else {
-    secondNumber = parseFloat(displayValue);
+    const secondNumber = parseFloat(displayValue);
     firstNumber = operate(firstNumber, operator, secondNumber);
     operator = event.target.dataset.value;
     displayValue = "";
@@ -61,7 +76,7 @@ const handleEqualsClick = () => {
 const handleClearClick = () => {
   firstNumber = null;
   operator = null;
-  displayValue = "0";
+  displayValue = "";
   updateDisplay();
 };
 
