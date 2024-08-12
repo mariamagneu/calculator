@@ -1,65 +1,82 @@
 const add = function (array) {
-  return array.reduce((total, current) => {
-    return total + current;
-  }, 0);
+  return array.reduce((total, current) => total + current, 0);
 };
 
 const subtract = function (array) {
   if (array.length === 0) return 0;
-  return array.reduce((total, current) => {
-    return total - current;
-  });
+  return array.reduce((total, current) => total - current);
 };
 
 const multiply = function (array) {
   if (array.length === 0) return 1;
-  return array.reduce((total, current) => {
-    return total * current;
-  }, 1);
+  return array.reduce((total, current) => total * current, 1);
 };
 
 const divide = function (array) {
-  return array.reduce((total, current) => {
-    return total / current;
-  });
+  if (array.length === 0) return 0;
+  return array.reduce((total, current) => total / current);
 };
 
-let firstNumber = 0;
-let operator;
-let secondNumber = 0;
+let firstNumber = null;
+let operator = null;
 let displayValue = "";
-
-const operate = function (firstNumber, operator, secondNumber) {
-  switch (operator) {
-    case "+":
-      return add([firstNumber, secondNumber]);
-    case "-":
-      return subtract([firstNumber, secondNumber]);
-    case "*":
-      return multiply([firstNumber, secondNumber]);
-    case "/":
-      return divide([firstNumber, secondNumber]);
-    default:
-      return "Invalid operator";
-  }
-};
 
 const display = document.getElementById("display");
 
 const updateDisplay = () => {
-  displayValue.textContent = displayValue;
+  display.textContent = displayValue;
 };
 
 const handleNumberClick = (event) => {
+  const buttonValue = event.target.dataset.value;
   displayValue += buttonValue;
   updateDisplay();
 };
 
-const numberButtons = document.querySelectorAll(".numbers .btn");
+const handleOperatorClick = (event) => {
+  if (firstNumber === null) {
+    firstNumber = parseFloat(displayValue);
+    operator = event.target.dataset.value;
+    displayValue = "";
+  } else {
+    secondNumber = parseFloat(displayValue);
+    firstNumber = operate(firstNumber, operator, secondNumber);
+    operator = event.target.dataset.value;
+    displayValue = "";
+    updateDisplay();
+  }
+};
 
+const handleEqualsClick = () => {
+  if (firstNumber !== null && operator) {
+    const secondNumber = parseFloat(displayValue);
+    const result = operate(firstNumber, operator, secondNumber);
+    displayValue = result.toString();
+    firstNumber = null;
+    operator = null;
+    updateDisplay();
+  }
+};
+
+const handleClearClick = () => {
+  firstNumber = null;
+  operator = null;
+  displayValue = "0";
+  updateDisplay();
+};
+
+const numberButtons = document.querySelectorAll(".numberButtons .btn");
 numberButtons.forEach((button) => {
   button.addEventListener("click", handleNumberClick);
 });
 
-const clearButton = document.getElemebtById("clear");
-clear;
+const operatorButtons = document.querySelectorAll(".operatorButtons .btn");
+operatorButtons.forEach((button) => {
+  button.addEventListener("click", handleOperatorClick);
+});
+
+const equalsButton = document.getElementById("equals");
+equalsButton.addEventListener("click", handleEqualsClick);
+
+const clearButton = document.getElementById("clear");
+clearButton.addEventListener("click", handleClearClick);
