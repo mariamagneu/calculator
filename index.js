@@ -27,6 +27,7 @@ const divide = function (array) {
 let firstNumber = 0;
 let operator;
 let secondNumber = 0;
+let displayValue = "";
 
 const operate = function (firstNumber, operator, secondNumber) {
   switch (operator) {
@@ -42,3 +43,23 @@ const operate = function (firstNumber, operator, secondNumber) {
       return "Invalid operator";
   }
 };
+
+const display = document.getElementById("display");
+
+const updateDisplay = () => {
+  displayValue.textContent = displayValue;
+};
+
+const handleNumberClick = (event) => {
+  displayValue += buttonValue;
+  updateDisplay();
+};
+
+const numberButtons = document.querySelectorAll(".numbers .btn");
+
+numberButtons.forEach((button) => {
+  button.addEventListener("click", handleNumberClick);
+});
+
+const clearButton = document.getElemebtById("clear");
+clear;
