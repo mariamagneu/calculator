@@ -76,7 +76,7 @@ const handleEqualsClick = () => {
 const handleClearClick = () => {
   firstNumber = null;
   operator = null;
-  displayValue = "";
+  displayValue = "0";
   updateDisplay();
 };
 
