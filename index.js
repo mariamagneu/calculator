@@ -54,11 +54,24 @@ const operate = function (firstNumber, operator, secondNumber) {
 
 const handleNumberClick = (event) => {
   const buttonValue = event.target.dataset.value;
-  if (displayValue === "0") {
-    displayValue = buttonValue;
+
+  if (buttonValue === ".") {
+    if (displayValue.includes(".")) {
+      return;
+    }
+    if (displayValue === "" || displayValue === "0") {
+      displayValue = "0.";
+    } else {
+      displayValue += buttonValue;
+    }
   } else {
-    displayValue += buttonValue;
+    if (displayValue === "0") {
+      displayValue = buttonValue;
+    } else {
+      displayValue += buttonValue;
+    }
   }
+
   updateDisplay();
 };
 
