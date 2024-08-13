@@ -51,15 +51,16 @@ const handleNumberClick = (event) => {
 const handleOperatorClick = (event) => {
   if (firstNumber === null) {
     firstNumber = parseFloat(displayValue);
-    operator = event.target.dataset.value;
-    displayValue = "";
   } else {
     const secondNumber = parseFloat(displayValue);
-    firstNumber = operate(firstNumber, operator, secondNumber);
-    operator = event.target.dataset.value;
-    displayValue = "";
+    const result = operate(firstNumber, operator, secondNumber);
+    displayValue = result.toString();
+    firstNumber = result;
     updateDisplay();
   }
+
+  operator = event.target.dataset.value;
+  displayValue = "";
 };
 
 const handleEqualsClick = () => {
