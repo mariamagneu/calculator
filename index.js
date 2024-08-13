@@ -41,7 +41,7 @@ const operate = function (firstNumber, operator, secondNumber) {
       break;
     case "/":
       if (secondNumber === 0) {
-        return "You can't divide by 0"; // Return an error string that can be handled later
+        return "You can't divide by 0";
       }
       result = divide([firstNumber, secondNumber]);
       break;
@@ -54,7 +54,11 @@ const operate = function (firstNumber, operator, secondNumber) {
 
 const handleNumberClick = (event) => {
   const buttonValue = event.target.dataset.value;
-  displayValue += buttonValue;
+  if (displayValue === "0") {
+    displayValue = buttonValue;
+  } else {
+    displayValue += buttonValue;
+  }
   updateDisplay();
 };
 
