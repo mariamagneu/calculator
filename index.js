@@ -26,20 +26,30 @@ const display = document.getElementById("display");
 const updateDisplay = () => {
   display.textContent = displayValue;
 };
-
 const operate = function (firstNumber, operator, secondNumber) {
+  let result;
+
   switch (operator) {
     case "+":
-      return add([firstNumber, secondNumber]);
+      result = add([firstNumber, secondNumber]);
+      break;
     case "-":
-      return subtract([firstNumber, secondNumber]);
+      result = subtract([firstNumber, secondNumber]);
+      break;
     case "*":
-      return multiply([firstNumber, secondNumber]);
+      result = multiply([firstNumber, secondNumber]);
+      break;
     case "/":
-      return divide([firstNumber, secondNumber]);
+      if (secondNumber === 0) {
+        return "You can't divide by 0"; // Return an error string that can be handled later
+      }
+      result = divide([firstNumber, secondNumber]);
+      break;
     default:
       return "Invalid operator";
   }
+
+  return Math.round(result * 1000) / 1000; // Round to 3 decimal places
 };
 
 const handleNumberClick = (event) => {
@@ -83,6 +93,13 @@ const handleClearClick = () => {
 
 const numberButtons = document.querySelectorAll(".numberButtons .btn");
 numberButtons.forEach((button) => {
+  button.addEventListener("click", handleNumberClick);
+});
+
+const decimalsAndZeroButtons = document.querySelectorAll(
+  ".decimalZeroButtons .btn"
+);
+decimalsAndZeroButtons.forEach((button) => {
   button.addEventListener("click", handleNumberClick);
 });
 
