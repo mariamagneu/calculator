@@ -51,106 +51,8 @@ const operate = function (firstNumber, operator, secondNumber) {
 
   return Math.round(result * 1000) / 1000;
 };
-
-const handleNumberClick = (event) => {
-  const buttonValue = event.target.dataset.value;
-
-  if (buttonValue === ".") {
-    if (displayValue.includes(".")) {
-      return;
-    }
-    if (displayValue === "" || displayValue === "0") {
-      displayValue = "0.";
-    } else {
-      displayValue += buttonValue;
-    }
-  } else {
-    if (displayValue === "0") {
-      displayValue = buttonValue;
-    } else {
-      displayValue += buttonValue;
-    }
-  }
-
-  updateDisplay();
-};
-
-const handleOperatorClick = (event) => {
-  if (firstNumber === null) {
-    firstNumber = parseFloat(displayValue);
-  } else {
-    const secondNumber = parseFloat(displayValue);
-    const result = operate(firstNumber, operator, secondNumber);
-    displayValue = result.toString();
-    firstNumber = result;
-    updateDisplay();
-  }
-
-  operator = event.target.dataset.value;
-  displayValue = "";
-};
-
-const handleEqualsClick = () => {
-  if (firstNumber !== null && operator) {
-    const secondNumber = parseFloat(displayValue);
-    const result = operate(firstNumber, operator, secondNumber);
-    displayValue = result.toString();
-    firstNumber = null;
-    operator = null;
-    updateDisplay();
-  }
-};
-
-const handleClearClick = () => {
-  firstNumber = null;
-  operator = null;
-  displayValue = "0";
-  updateDisplay();
-};
-
-document.addEventListener("keydown", (event) => {
-  if (event.key >= "0" && event.key <= "9") {
-    handleNumberInput(event.key);
-  }
-});
-
-const handleNumberInput = (key) => {
-  if (displayValue === "0") {
-    displayValue = key;
-  } else {
-    displayValue += key;
-  }
-  updateDisplay();
-};
-
-document.addEventListener("keydown", (event) => {
-  if (event.key === "Backspace") handleDeleteInput();
-});
-
-const handleDeleteInput = () => {
-  if (displayValue.length > 1) {
-    // Remove the last character from displayValue
-    displayValue = displayValue.slice(0, -1);
-  } else {
-    // If only one character is left, reset displayValue to "0"
-    displayValue = "0";
-  }
-
-  updateDisplay();
-};
-
-document.addEventListener("keydown", (event) => {
-  if (
-    event.key === "+" ||
-    event.key === "-" ||
-    event.key === "*" ||
-    event.key === "/"
-  ) {
-    handleOperatorInput(event.key);
-  }
-});
-
-const handleOperatorInput = (operatorKey) => {
+// Common function to handle operators (used by both click and keydown events)
+const handleOperator = (operatorKey) => {
   if (firstNumber === null) {
     firstNumber = parseFloat(displayValue);
   } else {
@@ -164,15 +66,83 @@ const handleOperatorInput = (operatorKey) => {
   operator = operatorKey;
   displayValue = "";
 };
-const numberButtons = document.querySelectorAll(".numberButtons .btn");
-numberButtons.forEach((button) => {
-  button.addEventListener("click", handleNumberClick);
+
+document.addEventListener("keydown", (event) => {
+  if (event.key >= "0" && event.key <= "9") {
+    handleNumberInput(event.key);
+  }
 });
 
-const decimalsAndZeroButtons = document.querySelectorAll(
-  ".decimalZeroButtons .btn"
-);
-decimalsAndZeroButtons.forEach((button) => {
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Backspace") handleDeleteInput();
+});
+
+document.addEventListener("keydown", (event) => {
+  if (
+    event.key === "+" ||
+    event.key === "-" ||
+    event.key === "*" ||
+    event.key === "/"
+  ) {
+    handleOperator(event.key);
+  }
+});
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Enter" || event.key === "=") {
+    handleEquals();
+  }
+});
+
+const handleNumberClick = (event) => {
+  handleNumberInput(event.target.dataset.value);
+};
+
+const handleOperatorClick = (event) => {
+  handleOperator(event.target.dataset.value);
+};
+
+const handleNumberInput = (key) => {
+  if (displayValue === "0") {
+    displayValue = key;
+  } else {
+    displayValue += key;
+  }
+  updateDisplay();
+};
+
+const handleDeleteInput = () => {
+  if (displayValue.length > 1) {
+    displayValue = displayValue.slice(0, -1);
+  } else {
+    displayValue = "0";
+  }
+  updateDisplay();
+};
+
+// Function for handling equals (Enter key or equals button)
+const handleEquals = () => {
+  if (firstNumber !== null && operator) {
+    const secondNumber = parseFloat(displayValue);
+    const result = operate(firstNumber, operator, secondNumber);
+    displayValue = result.toString();
+    firstNumber = null;
+    operator = null;
+    updateDisplay();
+  }
+};
+
+// Handle clear input
+const handleClearClick = () => {
+  firstNumber = null;
+  operator = null;
+  displayValue = "0";
+  updateDisplay();
+};
+
+// Add event listeners for button clicks
+const numberButtons = document.querySelectorAll(".numberButtons .btn");
+numberButtons.forEach((button) => {
   button.addEventListener("click", handleNumberClick);
 });
 
@@ -182,7 +152,7 @@ operatorButtons.forEach((button) => {
 });
 
 const equalsButton = document.getElementById("equals");
-equalsButton.addEventListener("click", handleEqualsClick);
+equalsButton.addEventListener("click", handleEquals);
 
 const clearButton = document.getElementById("clear");
 clearButton.addEventListener("click", handleClearClick);
