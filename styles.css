@@ -63,23 +63,54 @@ body {
 }
 
 .decimalZeroButtons {
-  grid-column: span 4;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-column: span 4; /* Ensure it spans all columns */
+  display: flex;
   gap: 5px;
 }
 
 .decimalZeroButtons .btn {
-  background-color: #c4b8a2; /* Light tan for number buttons */
+  flex: 1; /* Allow buttons to grow and fill available space */
+  background-color: #c4b8a2; /* Light tan for decimal and zero buttons */
+  border: 1px solid #ddd;
+  font-size: 18px;
+  padding: 20px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  border-radius: 5px;
+}
+
+.decimalZeroButtons .btn:hover {
+  background-color: #d4b6a5;
+}
+
+.equalsClearButtons {
+  grid-column: span 4; /* Ensure it spans all columns */
+  display: flex;
+  gap: 5px;
+}
+
+.equalsClearButtons .btn {
+  flex: 1; /* Allow buttons to grow and fill available space */
+  background-color: #c4b8a2; /* Light tan for decimal and zero buttons */
+  border: 1px solid #ddd;
+  font-size: 18px;
+  padding: 20px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  border-radius: 5px;
+}
+
+.equalsClearButtons .btn:hover {
+  background-color: #d4b6a5;
 }
 
 #equals {
-  background-color: #c4b8a2; /* Light tan for number buttons */
+  background-color: #a6c0a0;
   color: #0f0c0c;
 }
 
 #clear {
-  background-color: #e57373; /* Light red for clear button */
+  background-color: #292929;
   color: #fff;
 }
 .btn {
