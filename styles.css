@@ -3,53 +3,85 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #f0f0f0;
+  font-family: Arial, sans-serif;
+  background-color: #f2f4f1; /* Light beige background */
+
   margin: 0;
 }
 
 .calculator {
-  width: 260px;
+  border: 1px solid #d5c8b1; /* Light brown border */
+
+  width: 360px;
   border-radius: 5px;
   overflow: hidden;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+  background-color: #e1d7c6; /* Light earthy background */
 }
 
 .display {
-  background-color: #333;
+  background-color: #3e3e3e; /* Dark gray for display */
   color: #fff;
   padding: 20px;
-  font-size: 24px;
+  font-size: 2em;
   text-align: right;
   border-bottom: 1px solid #444;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 }
 
 .buttons {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: auto auto auto auto auto;
-  gap: 1px;
+  gap: 5px;
+  border-radius: 10px;
 }
 
 .operatorButtons {
   grid-column: span 4;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
+  gap: 5px;
+  padding-top: 5px;
 }
 
+.operatorButtons .btn {
+  background-color: #a6c0a0; /* Soft green for operator buttons */
+  color: #fff;
+}
 .numberButtons {
   grid-column: span 4;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 1px;
+  gap: 5px;
+}
+
+.numberButtons .btn {
+  background-color: #c4b8a2; /* Light tan for number buttons */
 }
 
 .decimalZeroButtons {
   grid-column: span 4;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 1px;
+  gap: 5px;
 }
 
+.decimalZeroButtons .btn {
+  background-color: #c4b8a2; /* Light tan for number buttons */
+}
+
+#equals {
+  background-color: #c4b8a2; /* Light tan for number buttons */
+  color: #0f0c0c;
+}
+
+#clear {
+  background-color: #e57373; /* Light red for clear button */
+  color: #fff;
+}
 .btn {
   background-color: #eee;
   border: 1px solid #ddd;
@@ -57,10 +89,11 @@ body {
   padding: 20px;
   cursor: pointer;
   transition: background-color 0.2s;
+  border-radius: 10px;
 }
 
 .btn:hover {
-  background-color: #ddd;
+  background-color: #d4b6a5;
 }
 
 .operator {
