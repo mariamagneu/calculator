@@ -49,7 +49,7 @@ const operate = function (firstNumber, operator, secondNumber) {
       return "Invalid operator";
   }
 
-  return Math.round(result * 1000) / 1000; // Round to 3 decimal places
+  return Math.round(result * 1000) / 1000;
 };
 
 const handleNumberClick = (event) => {
@@ -108,6 +108,36 @@ const handleClearClick = () => {
   updateDisplay();
 };
 
+document.addEventListener("keydown", (event) => {
+  if (event.key >= "0" && event.key <= "9") {
+    handleNumberInput(event.key);
+  }
+});
+
+const handleNumberInput = (key) => {
+  if (displayValue === "0") {
+    displayValue = key;
+  } else {
+    displayValue += key;
+  }
+  updateDisplay();
+};
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Backspace") handleDeleteInput();
+});
+
+const handleDeleteInput = () => {
+  if (displayValue.length > 1) {
+    // Remove the last character from displayValue
+    displayValue = displayValue.slice(0, -1);
+  } else {
+    // If only one character is left, reset displayValue to "0"
+    displayValue = "0";
+  }
+
+  updateDisplay();
+};
 const numberButtons = document.querySelectorAll(".numberButtons .btn");
 numberButtons.forEach((button) => {
   button.addEventListener("click", handleNumberClick);
