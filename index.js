@@ -51,22 +51,27 @@ const operate = function (firstNumber, operator, secondNumber) {
 
   return Math.round(result * 1000) / 1000;
 };
-// Common function to handle operators (used by both click and keydown events)
 const handleOperator = (operatorKey) => {
+  if (displayValue === "") {
+    operator = operatorKey; // Just update the operator
+    return;
+  }
+
   if (firstNumber === null) {
     firstNumber = parseFloat(displayValue);
-  } else {
+  } else if (operator) {
     const secondNumber = parseFloat(displayValue);
-    const result = operate(firstNumber, operator, secondNumber);
-    displayValue = result.toString();
-    firstNumber = result;
-    updateDisplay();
+    if (!isNaN(secondNumber)) {
+      const result = operate(firstNumber, operator, secondNumber);
+      displayValue = result.toString();
+      firstNumber = result;
+      updateDisplay();
+    }
   }
 
   operator = operatorKey;
-  displayValue = "";
+  displayValue = ""; // Reset displayValue for the next number input
 };
-
 document.addEventListener("keydown", (event) => {
   if (event.key >= "0" && event.key <= "9") {
     handleNumberInput(event.key);
@@ -120,15 +125,16 @@ const handleDeleteInput = () => {
   updateDisplay();
 };
 
-// Function for handling equals (Enter key or equals button)
 const handleEquals = () => {
   if (firstNumber !== null && operator) {
     const secondNumber = parseFloat(displayValue);
-    const result = operate(firstNumber, operator, secondNumber);
-    displayValue = result.toString();
-    firstNumber = null;
-    operator = null;
-    updateDisplay();
+    if (!isNaN(secondNumber)) {
+      const result = operate(firstNumber, operator, secondNumber);
+      displayValue = result.toString();
+      firstNumber = null;
+      operator = null;
+      updateDisplay();
+    }
   }
 };
 
