@@ -138,6 +138,32 @@ const handleDeleteInput = () => {
 
   updateDisplay();
 };
+
+document.addEventListener("keydown", (event) => {
+  if (
+    event.key === "+" ||
+    event.key === "-" ||
+    event.key === "*" ||
+    event.key === "/"
+  ) {
+    handleOperatorInput(event.key);
+  }
+});
+
+const handleOperatorInput = (operatorKey) => {
+  if (firstNumber === null) {
+    firstNumber = parseFloat(displayValue);
+  } else {
+    const secondNumber = parseFloat(displayValue);
+    const result = operate(firstNumber, operator, secondNumber);
+    displayValue = result.toString();
+    firstNumber = result;
+    updateDisplay();
+  }
+
+  operator = operatorKey;
+  displayValue = "";
+};
 const numberButtons = document.querySelectorAll(".numberButtons .btn");
 numberButtons.forEach((button) => {
   button.addEventListener("click", handleNumberClick);
